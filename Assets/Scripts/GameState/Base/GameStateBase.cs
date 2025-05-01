@@ -7,16 +7,12 @@ public abstract class GameStateBase : MonoBehaviour
 {
     [SerializeField] public States NextState;
     
-    public static event Action<States> OnChangeStateRequested;
-
+    public static Action<States> ChangeStateRequested;
     public InputAction nextStateAction;
+    
     public bool is_connected = false;
-
-    protected void RequestStateChange()
-    {
-        OnChangeStateRequested?.Invoke(NextState);
-    }
-
+    
+    
     public virtual void StartState()
     {
         AddListeners();

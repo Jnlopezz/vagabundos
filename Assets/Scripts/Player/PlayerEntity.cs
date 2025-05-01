@@ -1,16 +1,6 @@
-using System;
 using UnityEngine;
 
-[Serializable]
-public class PlayerEntity
+public class PlayerEntity : MonoBehaviour
 {
-    public Action UpdatedScore;
-    
-    [SerializeField] private int score = 0;
-    public int Score { get { return score; } }
-    public void IncreaseScore(int amount)
-    {
-        score += amount;
-        UpdatedScore?.Invoke();
-    }
+    public int level = 1;
 }

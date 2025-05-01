@@ -9,7 +9,7 @@ public class ResultsState : GameStateBase
 
         is_connected = true;
         nextStateAction = new InputAction(binding: "<Keyboard>/x");
-        nextStateAction.performed += ctx => RequestStateChange();
+        nextStateAction.performed += ctx => ChangeStateRequested(NextState);
         nextStateAction.Enable();
     }
 
@@ -20,6 +20,7 @@ public class ResultsState : GameStateBase
 
         is_connected = false;
         nextStateAction?.Disable();
+        nextStateAction.performed -= ctx => ChangeStateRequested(NextState);
         StartCoroutine(DisposeActionNextFrame());
     }
 }
