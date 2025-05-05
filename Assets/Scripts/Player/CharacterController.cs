@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CharacterController : MonoBehaviour
+public class CharacterControllerPlayer : MonoBehaviour
 {
     [SerializeField] private CharacterView characterView;
 
@@ -15,10 +15,10 @@ public class CharacterController : MonoBehaviour
         characterView.PlayAnimation(animEnum);
     }
 
-    public void SetCharacterDirection(Vector2 direction)
+    public void SetCharacterDirection(int direction)
     {
         Vector3 scale = transform.localScale;
-        scale.x = Mathf.Sign(direction.x) * Mathf.Abs(scale.x);
+        scale.x = Mathf.Sign(direction) * Mathf.Abs(scale.x);
         transform.localScale = scale;
     }
 

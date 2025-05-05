@@ -10,8 +10,8 @@ public class GamePlayState : GameStateBase
     [SerializeField] private LoseLevelState loseLevelState;
     
     [SerializeField] private LevelManager levelManager;
-    [SerializeField] private InputGameplay inputGameplayState;
-    [SerializeField] private CharacterController characterController;
+    [SerializeField] private InputGameplay inputGameplay;
+    [SerializeField] private CharacterControllerPlayer characterControllerPlayer;
     private LevelMovementController levelMovementController;
     
     
@@ -32,42 +32,47 @@ public class GamePlayState : GameStateBase
         is_connected = true;
         GameplayStateBase.gameplayStateRequested += OnChangeGameState;
         LevelManager.levelLoaded += OnLevelLoaded;
-        InputGameplay.InputActivated += OnInputGamePressed;
+        inputGameplay.InputClickActivated += OnInputGamePressed;
         StarGameplayController.startPressed += OnStartPressed;
     }
     
     public void OnLevelLoaded()
     {
         levelMovementController = levelManager.currentLevelInstance.GetComponent<LevelMovementController>();
-        LevelMovementController.rotationFinished += OnRotationFinished;
+        levelMovementController.rotationFinished += OnRotationFinished;
+        levelMovementController.rotationStarted += OnRotationStarted;
         enterLevelState.nextGameplayState();
-        characterController.Initialize();
+        characterControllerPlayer.Initialize();
         levelManager.Initialize();
     }
 
-    public void OnInputGamePressed(Vector2 position)
+    public void OnInputGamePressed(Vector2 clickPosition)
     {
-        Vector2 direction = position - new Vector2(653, 814);
         Transform levelTransform = levelManager.currentLevelInstance.transform;
-        levelMovementController.RotateLevel(position, levelTransform);
-        characterController.SetCharacterDirection(direction);
-        characterController.ChangeCharacterAction(Animations.Run);
+        levelMovementController.RotateLevel(clickPosition, levelTransform);
+    }
+
+    private void OnRotationStarted(int rotationdirection)
+    {
+        characterControllerPlayer.SetCharacterDirection(rotationdirection);
+        characterControllerPlayer.ChangeCharacterAction(Animations.Run);
     }
 
     private void OnRotationFinished()
     {
         if (is_wating_start)
         {
-            characterController.ChangeCharacterAction(Animations.Idle);
+            characterControllerPlayer.ChangeCharacterAction(Animations.Idle);
             OnChangeGameState(GameplayStates.Run);
             return;
         }
 
-        characterController.ChangeCharacterAction(Animations.Idle);
+        characterControllerPlayer.ChangeCharacterAction(Animations.Idle);
     }
 
     private void OnStartPressed()
     {
+        print("DEDEDEDED");
         is_wating_start = true;
         StarGameplayController.startPressed -= OnStartPressed;
     }
@@ -84,7 +89,7 @@ public class GamePlayState : GameStateBase
                 currentStateObject = enterLevelState;
                 break;
             case GameplayStates.Exploration:
-                explorationState.Dependences(inputGameplayState);
+                explorationState.Dependences(inputGameplay);
                 currentStateObject = explorationState;
                 break;
             case GameplayStates.Run:
@@ -113,8 +118,9 @@ public class GamePlayState : GameStateBase
         is_connected = false;
         GameplayStateBase.gameplayStateRequested -= OnChangeGameState;
         LevelManager.levelLoaded -= OnLevelLoaded;
-        InputGameplay.InputActivated -= OnInputGamePressed;
-        LevelMovementController.rotationFinished -= OnRotationFinished;
+        inputGameplay.InputClickActivated -= OnInputGamePressed;
+        levelMovementController.rotationFinished -= OnRotationFinished;
+        levelMovementController.rotationStarted -= OnRotationStarted;
     }
     
 }

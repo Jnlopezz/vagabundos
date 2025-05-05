@@ -1,11 +1,12 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System;
+using UnityEngine.EventSystems;
 public class InputGameplay : MonoBehaviour
 {
     
     private bool is_connected = false;
-    public static event Action<Vector2> InputActivated;
+    public event Action<Vector2> InputClickActivated;
     public InputAction inputGamePressed;
 
     public void AddListeners()
@@ -21,8 +22,13 @@ public class InputGameplay : MonoBehaviour
 
     private void OnInputPerformed(InputAction.CallbackContext context)
     {
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+        
         Vector2 clickPosition = Mouse.current.position.ReadValue();
-        InputActivated?.Invoke(clickPosition);
+        InputClickActivated?.Invoke(clickPosition);
     }
 
     public void RemoveListeners()
