@@ -15,6 +15,7 @@ public class ObstacleBehavior : ObstacleBase
     public override void OnActivated()
     {
         isActivated = true;
+        ObstacleActivated?.Invoke();
         Conclude();
     }
     

@@ -70,11 +70,11 @@ public class GamePlayState : GameStateBase
         characterControllerPlayer.ChangeCharacterAction(Animations.Idle);
     }
 
-    private void OnStartPressed()
+    private void OnStartPressed(Vector2 clickPosition)
     {
-        print("DEDEDEDED");
         is_wating_start = true;
         StarGameplayController.startPressed -= OnStartPressed;
+        OnInputGamePressed(clickPosition);
     }
 
     private void OnChangeGameState(GameplayStates nextState)
