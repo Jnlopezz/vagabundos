@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/GameManager.unity
+    guid: 71731dc15fb844c459a8807d04550ad9
+  - enabled: 1
     path: Assets/Scenes/GameFlow/Main.unity
     guid: 92dd895f7c0c0064a8f6c7568d18d428
   - enabled: 1
@@ -14,9 +17,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameFlow/Results.unity
     guid: f261354c501bf004c9f360431b90b748
-  - enabled: 1
-    path: Assets/Scenes/GameManager.unity
-    guid: 71731dc15fb844c459a8807d04550ad9
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: e1bf6a0813d744604a0b49f17e09b4f9, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

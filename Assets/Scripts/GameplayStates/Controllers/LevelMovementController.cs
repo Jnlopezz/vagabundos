@@ -35,6 +35,11 @@ public class LevelMovementController : MonoBehaviour
         );
     }
 
+    public void ActivateNpc()
+    {
+        print("aqui");
+    }
+
     private float NormalizeAngle(float angle)
     {
         angle %= 360f;

@@ -1,10 +1,10 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using System;
 
 public class InputMainState : MonoBehaviour
 {
-    public InputAction inputPressed;
+    public Button StartButton;
     private bool is_connected = false;
     public event Action InputActivated;
 
@@ -14,9 +14,7 @@ public class InputMainState : MonoBehaviour
             return;
 
         is_connected = true;
-        inputPressed = new InputAction(binding: "<Mouse>/leftButton");
-        inputPressed.performed += ctx => InputActivated?.Invoke();
-        inputPressed.Enable();
+        StartButton.onClick.AddListener(OnButtonClicked);
     }
 
     public void RemoveListeners()
@@ -25,7 +23,11 @@ public class InputMainState : MonoBehaviour
             return;
 
         is_connected = false;
-        inputPressed?.Disable();
-        inputPressed.performed -= ctx => InputActivated?.Invoke();
+        StartButton.onClick.RemoveListener(OnButtonClicked);
+    }
+    
+    private void OnButtonClicked()
+    {
+        InputActivated?.Invoke();
     }
 }

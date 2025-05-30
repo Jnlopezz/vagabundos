@@ -18,5 +18,6 @@ public enum Animations
 {
     Idle,
     Run,
-    Die
+    Die,
+    Activated
 }

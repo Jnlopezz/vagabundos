@@ -10,4 +10,9 @@ public class LevelController : MonoBehaviour
         //obstaclesManager.Initialize();
         starGameplayController.Initialize();
     }
+    
+    public void ActivateNpc()
+    {
+        starGameplayController.NpcAction();
+    }
 }

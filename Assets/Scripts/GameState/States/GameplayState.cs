@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 
@@ -20,8 +21,8 @@ public class GamePlayState : GameStateBase
     
     public override void StartState()
     {
-        OnChangeGameState(gameplayState);
         AddListeners();
+        OnChangeGameState(gameplayState);
     }
     
     public override void AddListeners()
@@ -62,8 +63,9 @@ public class GamePlayState : GameStateBase
     {
         if (is_wating_start)
         {
+            levelManager.ActivateNpc();
             characterControllerPlayer.ChangeCharacterAction(Animations.Idle);
-            OnChangeGameState(GameplayStates.Run);
+            //OnChangeGameState(GameplayStates.Run);
             return;
         }
 

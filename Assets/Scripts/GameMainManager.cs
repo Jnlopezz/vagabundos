@@ -10,8 +10,8 @@ public class GameMainManager : MonoBehaviour
     {
         gameSceneController.StartGame();
         
-        DevConsole.EnableConsole();
-        DevConsole.OpenConsole();
+        //DevConsole.EnableConsole();
+        //DevConsole.OpenConsole();
         DevConsole.Log("Hello world!");
     }
 }
