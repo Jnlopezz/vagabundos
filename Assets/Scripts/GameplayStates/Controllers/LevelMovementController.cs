@@ -10,6 +10,7 @@ public class LevelMovementController : MonoBehaviour
     [SerializeField] private float tweenDuration = 0.5f;
     public event Action rotationFinished;
     public event Action<int> rotationStarted;
+    private Tween currentRotationTween;
     
 
     public void RotateLevel(Vector2 screenPosition, Transform levelTransform)
@@ -26,19 +27,22 @@ public class LevelMovementController : MonoBehaviour
 
     public void RotateMovement(Transform levelTransform, float target)
     {
-        levelTransform.DOLocalRotate(
-            new Vector3(0, 0, target),
-            tweenDuration).OnComplete(() =>
+        if (currentRotationTween != null && currentRotationTween.IsActive())
+        {
+            currentRotationTween.Kill();
+        }
+
+        currentRotationTween = levelTransform.DOLocalRotate(
+                new Vector3(0, 0, target),
+                tweenDuration)
+            .SetEase(Ease.Linear)
+            .OnComplete(() =>
             {
                 rotationFinished?.Invoke();
-            }
-        );
+                currentRotationTween = null;
+            });
     }
-
-    public void ActivateNpc()
-    {
-        print("aqui");
-    }
+    
 
     private float NormalizeAngle(float angle)
     {

@@ -5,7 +5,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class LevelManager : MonoBehaviour
 {
-    public static Action levelLoaded;
+    public Action levelLoaded;
     
     public LevelController levelController;
     public GameObject currentLevelInstance;
@@ -22,7 +22,7 @@ public class LevelManager : MonoBehaviour
         {
             Destroy(currentLevelInstance);
         }
-
+        
         Addressables.LoadAssetAsync<GameObject>(name_string).Completed += (handle) =>
         {
             if (handle.Status == AsyncOperationStatus.Succeeded)

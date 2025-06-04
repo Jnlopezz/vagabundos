@@ -23,24 +23,22 @@ public class GameSceneController : MonoBehaviour
             SceneManager.UnloadSceneAsync(currentState.ToString());
         }
 
-        Debug.Log(nextState.ToString());
+        currentStateScene = null;
+        currentState = nextState;
         SceneManager.LoadSceneAsync(nextState.ToString(), LoadSceneMode.Additive).completed += (_) =>
         {
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName(currentState.ToString()));
             OnSceneChangeComplete();
         };
         
-        currentState = nextState;
+        
     }
 
     private void OnSceneChangeComplete()
     {
         Scene currentScene = SceneManager.GetSceneByName(currentState.ToString());
-        foreach (var root in currentScene.GetRootGameObjects())
-        {
-            currentStateScene = root.GetComponent<GameStateBase>();
-            break;
-        }
-        
+        currentStateScene = FindObjectOfType<GameStateBase>();
+
         AddListeners();
 
     }

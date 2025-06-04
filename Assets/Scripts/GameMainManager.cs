@@ -12,6 +12,5 @@ public class GameMainManager : MonoBehaviour
         
         //DevConsole.EnableConsole();
         //DevConsole.OpenConsole();
-        DevConsole.Log("Hello world!");
     }
 }

@@ -21,18 +21,18 @@ public class GamePlayState : GameStateBase
     
     public override void StartState()
     {
-        AddListeners();
         OnChangeGameState(gameplayState);
+        AddListeners();
     }
     
     public override void AddListeners()
     {
         if (is_connected)
             return;
-
+        
         is_connected = true;
-        GameplayStateBase.gameplayStateRequested += OnChangeGameState;
-        LevelManager.levelLoaded += OnLevelLoaded;
+        currentStateObject.gameplayStateRequested += OnChangeGameState;
+        levelManager.levelLoaded += OnLevelLoaded;
         inputGameplay.InputClickActivated += OnInputGamePressed;
         StarGameplayController.startPressed += OnStartPressed;
     }
@@ -118,8 +118,8 @@ public class GamePlayState : GameStateBase
             return;
 
         is_connected = false;
-        GameplayStateBase.gameplayStateRequested -= OnChangeGameState;
-        LevelManager.levelLoaded -= OnLevelLoaded;
+        currentStateObject.gameplayStateRequested -= OnChangeGameState;
+        levelManager.levelLoaded -= OnLevelLoaded;
         inputGameplay.InputClickActivated -= OnInputGamePressed;
         levelMovementController.rotationFinished -= OnRotationFinished;
         levelMovementController.rotationStarted -= OnRotationStarted;

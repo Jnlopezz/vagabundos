@@ -4,7 +4,7 @@ using UnityEngine;
 public class GameplayStateBase : MonoBehaviour
 {
     [SerializeField] public GameplayStates NextState;
-    public static Action<GameplayStates> gameplayStateRequested;
+    public Action<GameplayStates> gameplayStateRequested;
     public bool is_connected = false;
     
     
