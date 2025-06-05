@@ -23,20 +23,24 @@ public class FillerController : MonoBehaviour
     [SerializeField] private float clickTolerance;
     [SerializeField] private Color correctClickColor;
     [SerializeField] private Color incorrectClickColor;
+    [SerializeField] private CanvasGroup sliderCanvasGroup;
     private int currentSlider = 1;
     private List<float> spawnPointsLocations = new();
     private int spawnPointsCreated;
     private Dictionary<float, GameObject> spawnedPoints = new();
     private bool notEnoughSpace;
     private HashSet<float> animatedPoints = new();
+    private bool isInitialized = false;
     
     void Start()
     {
-        StartSlidersSequence();
+        sliderCanvasGroup.alpha = 0;
     }
     
     void Update()
     {
+        if (!isInitialized)
+            return;
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             float clickValue = slider.value;
@@ -92,12 +96,16 @@ public class FillerController : MonoBehaviour
         }
     }
 
-    private void StartSlidersSequence()
+    public void StartSlidersSequence()
     {
+        isInitialized = true;
         GenerateSpawnPoints();
         
         if (currentSlider > maxSliders || notEnoughSpace)
             return;
+
+        sliderCanvasGroup.alpha = 1;
+        
 
         SpawnInteractPointsOnSlider();
 

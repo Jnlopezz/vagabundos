@@ -9,11 +9,18 @@ public class LevelManager : MonoBehaviour
     
     public LevelController levelController;
     public GameObject currentLevelInstance;
+    [SerializeField] private FillerController earthquakeGameFillerController;
 
     public void Initialize()
     {
         levelController = currentLevelInstance.GetComponent<LevelController>();
         levelController.Initialize();
+        levelController.LastLevelCompleted += OnLastLevelCompleted;
+    }
+
+    private void OnLastLevelCompleted()
+    {
+        earthquakeGameFillerController.StartSlidersSequence();
     }
 
     public void LoadLevel(string name_string)
@@ -37,14 +44,10 @@ public class LevelManager : MonoBehaviour
             }
         };
     }
-
-    public void ActivateNpc()
-    {
-        levelController.ActivateNpc();
-    }
+    
 
     public void Conclude()
     {
-        
+        levelController.LastLevelCompleted -= OnLastLevelCompleted;
     }
 }
