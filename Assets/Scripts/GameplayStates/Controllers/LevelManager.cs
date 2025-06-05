@@ -37,11 +37,7 @@ public class LevelManager : MonoBehaviour
             }
         };
     }
-
-    public void ActivateNpc()
-    {
-        levelController.ActivateNpc();
-    }
+    
 
     public void Conclude()
     {

@@ -17,6 +17,7 @@ public class GamePlayState : GameStateBase
     
     
     private GameplayStateBase currentStateObject = null;
+    private InteractableBase interactableSelected;
     private bool is_wating_start = false;
     
     public override void StartState()
@@ -34,7 +35,7 @@ public class GamePlayState : GameStateBase
         currentStateObject.gameplayStateRequested += OnChangeGameState;
         levelManager.levelLoaded += OnLevelLoaded;
         inputGameplay.InputClickActivated += OnInputGamePressed;
-        StarGameplayController.startPressed += OnStartPressed;
+        InteractableBase.actionPressed += OnActionPressed;
     }
     
     public void OnLevelLoaded()
@@ -49,6 +50,8 @@ public class GamePlayState : GameStateBase
 
     public void OnInputGamePressed(Vector2 clickPosition)
     {
+        if (is_wating_start) { return; }
+
         Transform levelTransform = levelManager.currentLevelInstance.transform;
         levelMovementController.RotateLevel(clickPosition, levelTransform);
     }
@@ -63,20 +66,22 @@ public class GamePlayState : GameStateBase
     {
         if (is_wating_start)
         {
-            levelManager.ActivateNpc();
+            interactableSelected?.Action();
+            interactableSelected = null;
             characterControllerPlayer.ChangeCharacterAction(Animations.Idle);
             //OnChangeGameState(GameplayStates.Run);
+            is_wating_start = false;
             return;
         }
 
         characterControllerPlayer.ChangeCharacterAction(Animations.Idle);
     }
 
-    private void OnStartPressed(Vector2 clickPosition)
+    private void OnActionPressed(Vector2 clickPosition, InteractableBase npc)
     {
-        is_wating_start = true;
-        StarGameplayController.startPressed -= OnStartPressed;
+        interactableSelected = npc;
         OnInputGamePressed(clickPosition);
+        is_wating_start = true;
     }
 
     private void OnChangeGameState(GameplayStates nextState)
@@ -123,6 +128,7 @@ public class GamePlayState : GameStateBase
         inputGameplay.InputClickActivated -= OnInputGamePressed;
         levelMovementController.rotationFinished -= OnRotationFinished;
         levelMovementController.rotationStarted -= OnRotationStarted;
+        InteractableBase.actionPressed -= OnActionPressed;
     }
     
 }
