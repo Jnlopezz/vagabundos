@@ -39,7 +39,6 @@ public class FillerController : MonoBehaviour
         waitingForStartCanvasGroup.alpha = 0;
         instructionsCanvasGroup.alpha = 0;
         congratulationsCanvasGroup.alpha = 0;
-        Initialize();
     }
 
     public void Initialize()
