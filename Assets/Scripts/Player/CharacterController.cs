@@ -17,8 +17,9 @@ public class CharacterControllerPlayer : MonoBehaviour
 
     public void SetCharacterDirection(int direction)
     {
+        
         Vector3 scale = transform.localScale;
-        scale.x = Mathf.Sign(direction) * Mathf.Abs(scale.x);
+        scale.x = Mathf.Abs(scale.x) * Mathf.Sign(direction);
         transform.localScale = scale;
     }
 

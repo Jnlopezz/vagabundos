@@ -19,6 +19,7 @@ public class GamePlayState : GameStateBase
     private GameplayStateBase currentStateObject = null;
     private InteractableBase interactableSelected;
     private bool is_wating_start = false;
+    private int npcRotationdirection;
     
     public override void StartState()
     {
@@ -68,6 +69,7 @@ public class GamePlayState : GameStateBase
         {
             interactableSelected?.Action();
             interactableSelected = null;
+            characterControllerPlayer.SetCharacterDirection(npcRotationdirection);
             characterControllerPlayer.ChangeCharacterAction(Animations.Idle);
             //OnChangeGameState(GameplayStates.Run);
             is_wating_start = false;
@@ -77,9 +79,10 @@ public class GamePlayState : GameStateBase
         characterControllerPlayer.ChangeCharacterAction(Animations.Idle);
     }
 
-    private void OnActionPressed(Vector2 clickPosition, InteractableBase npc)
+    private void OnActionPressed(Vector2 clickPosition, float scale, InteractableBase npc)
     {
         interactableSelected = npc;
+        npcRotationdirection = (int)scale;
         OnInputGamePressed(clickPosition);
         is_wating_start = true;
     }

@@ -4,7 +4,8 @@ using System;
 
 public abstract class InteractableBase : MonoBehaviour
 {
-    public static Action<Vector2, InteractableBase> actionPressed;
+    public static Action<Vector2, float ,InteractableBase> actionPressed;
+    
 
     public virtual void Initialize()
     {

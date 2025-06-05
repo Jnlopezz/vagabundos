@@ -20,8 +20,8 @@ public class NpcController : InteractableBase
     {
         Vector3 screenPosition = Camera.main.WorldToScreenPoint(npc_position.position);
         Vector2 npcScreenPosition = new Vector2(screenPosition.x, screenPosition.y);
-        
-        actionPressed?.Invoke(screenPosition, this);
+
+        actionPressed?.Invoke(screenPosition, npc_position.localScale.x ,this);
        
     }
     
