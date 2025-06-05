@@ -234,6 +234,9 @@ MonoBehaviour:
   correctClickColor: {r: 0.19607843, g: 0.76862746, b: 0.20392157, a: 1}
   incorrectClickColor: {r: 0.83137256, g: 0.13333334, b: 0.09411765, a: 1}
   sliderCanvasGroup: {fileID: 171003789}
+  waitingForStartCanvasGroup: {fileID: 7942567686115096807}
+  instructionsCanvasGroup: {fileID: 7942567686115096806}
+  congratulationsCanvasGroup: {fileID: 7942567686115096805}
 --- !u!1 &550668232
 GameObject:
   m_ObjectHideFlags: 0
@@ -963,6 +966,21 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 322f9f8c001544344bb7c591ad7d0366, type: 3}
+--- !u!225 &7942567686115096805 stripped
+CanvasGroup:
+  m_CorrespondingSourceObject: {fileID: 8799424393333170354, guid: 322f9f8c001544344bb7c591ad7d0366, type: 3}
+  m_PrefabInstance: {fileID: 7942567686115096804}
+  m_PrefabAsset: {fileID: 0}
+--- !u!225 &7942567686115096806 stripped
+CanvasGroup:
+  m_CorrespondingSourceObject: {fileID: 5125444546418025633, guid: 322f9f8c001544344bb7c591ad7d0366, type: 3}
+  m_PrefabInstance: {fileID: 7942567686115096804}
+  m_PrefabAsset: {fileID: 0}
+--- !u!225 &7942567686115096807 stripped
+CanvasGroup:
+  m_CorrespondingSourceObject: {fileID: 2937044186898723374, guid: 322f9f8c001544344bb7c591ad7d0366, type: 3}
+  m_PrefabInstance: {fileID: 7942567686115096804}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

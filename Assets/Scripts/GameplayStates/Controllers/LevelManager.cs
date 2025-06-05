@@ -6,6 +6,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 public class LevelManager : MonoBehaviour
 {
     public Action levelLoaded;
+    public Action EarthQuakeStarted;
     
     public LevelController levelController;
     public GameObject currentLevelInstance;
@@ -20,6 +21,7 @@ public class LevelManager : MonoBehaviour
 
     private void OnLastLevelCompleted()
     {
+        EarthQuakeStarted?.Invoke();
         earthquakeGameFillerController.Initialize();
     }
 
