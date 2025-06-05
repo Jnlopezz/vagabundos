@@ -23,7 +23,7 @@ public class FillerController : MonoBehaviour
     [SerializeField] private float clickTolerance;
     [SerializeField] private Color correctClickColor;
     [SerializeField] private Color incorrectClickColor;
-    [SerializeField] private CanvasGroup sliderCanvasGroup;
+    [SerializeField] private CanvasGroup sliderCanvasGroup, waitingForStartCanvasGroup, instructionsCanvasGroup, congratulationsCanvasGroup;
     private int currentSlider = 1;
     private List<float> spawnPointsLocations = new();
     private int spawnPointsCreated;
@@ -31,14 +31,49 @@ public class FillerController : MonoBehaviour
     private bool notEnoughSpace;
     private HashSet<float> animatedPoints = new();
     private bool isInitialized = false;
+    private bool isWaitingForStart = false;
     
     void Start()
     {
         sliderCanvasGroup.alpha = 0;
+        waitingForStartCanvasGroup.alpha = 0;
+        instructionsCanvasGroup.alpha = 0;
+        congratulationsCanvasGroup.alpha = 0;
+        Initialize();
+    }
+
+    public void Initialize()
+    {
+        sliderCanvasGroup.DOFade(1, 0.3f);
+        waitingForStartCanvasGroup.DOFade(1, 0.3f);
+        waitingForStartCanvasGroup.GetComponent<RectTransform>().DOPunchScale(Vector3.one, 0.3f);
+        isWaitingForStart = true;
     }
     
     void Update()
     {
+        if (isWaitingForStart)
+        {
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                isWaitingForStart = false;
+                isInitialized = true;
+                waitingForStartCanvasGroup.DOFade(0, 0.1f);
+                waitingForStartCanvasGroup.GetComponent<RectTransform>().DOScale(Vector3.zero, 0.1f).OnComplete(() =>
+                {
+                    instructionsCanvasGroup.DOFade(1, 0.3f);
+                    instructionsCanvasGroup.GetComponent<RectTransform>().DOPunchScale(Vector3.one, 0.3f).OnComplete(
+                        () =>
+                        {
+                            instructionsCanvasGroup.DOFade(0, 0.1f).SetDelay(4);
+                            instructionsCanvasGroup.GetComponent<RectTransform>().DOScale(Vector3.zero, 0.1f).SetDelay(4);
+                        } );
+                });
+                StartSlidersSequence();
+            }
+        }
+        
+        
         if (!isInitialized)
             return;
         if (Input.GetKeyDown(KeyCode.Mouse0))
@@ -96,15 +131,21 @@ public class FillerController : MonoBehaviour
         }
     }
 
+    private void ConcludeGame()
+    {
+        congratulationsCanvasGroup.DOFade(1, 0.3f);
+        congratulationsCanvasGroup.GetComponent<RectTransform>().DOPunchScale(Vector3.one, 0.3f);
+    }
+
     public void StartSlidersSequence()
     {
-        isInitialized = true;
         GenerateSpawnPoints();
-        
-        if (currentSlider > maxSliders || notEnoughSpace)
-            return;
 
-        sliderCanvasGroup.alpha = 1;
+        if (currentSlider > maxSliders || notEnoughSpace)
+        {
+            ConcludeGame();
+            return;
+        }
         
 
         SpawnInteractPointsOnSlider();

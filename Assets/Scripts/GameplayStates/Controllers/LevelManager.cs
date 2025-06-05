@@ -20,7 +20,7 @@ public class LevelManager : MonoBehaviour
 
     private void OnLastLevelCompleted()
     {
-        earthquakeGameFillerController.StartSlidersSequence();
+        earthquakeGameFillerController.Initialize();
     }
 
     public void LoadLevel(string name_string)
