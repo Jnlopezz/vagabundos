@@ -102,7 +102,7 @@ public class FillerController : MonoBehaviour
                         return;
                     
                     if (clickedAtRightLocation)
-                        pointGameObject.transform.DOPunchScale(Vector3.one * 1.5f, .5f);
+                        pointGameObject.transform.DOPunchScale(Vector3.one * 1.2f, .5f);
                     else
                         pointGameObject.transform.DOShakePosition(.5f, Vector3.one * 6, 15);
                     
